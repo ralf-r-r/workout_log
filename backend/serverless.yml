@@ -12,7 +12,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'eu-central-1'}
   environment:
-    WORKOUT_TABLE: trainingplan-v04-${self:provider.stage}
+    WORKOUT_TABLE: trainingplan-v05-${self:provider.stage}
     TRAININGPLAN_S3_BUCKET: sls-workout-img-v2-${self:provider.stage}
   tracing:
     lambda: true
@@ -22,23 +22,21 @@ functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-
-  GetTrainingPlans:
-    handler: src/lambda/http/getTrainingPlans.handler
+  CreateSession:
+    handler: src/lambda/http/createSession.handler
     events:
       - http:
-          method: get
-          path: trainingplans
+          method: post
+          path: createsession
           cors: True
           authorizer: Auth
+          request:
+            schema:
+              application/json: ${file(src/models/create-todo-model.json)} # relative to where the serverless.yaml is
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.WORKOUT_TABLE}
-      - Effect: Allow
-        Action:
-          - dynamodb:GetItem
+          - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.WORKOUT_TABLE}
       - Effect: Allow
         Action:

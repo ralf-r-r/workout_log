@@ -6,3 +6,8 @@ export interface Session {
     attachmentUrl?: string
 }
 
+export interface SessionRequest {
+    name: string
+    date: string
+    description: string
+}

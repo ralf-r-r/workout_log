@@ -1,5 +1,6 @@
 import * as AWS  from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { SessionItem } from '../models/TrainingData'
 
 const AWSXRay = require('aws-xray-sdk')
 
@@ -51,5 +52,12 @@ export class DataAccess {
         Key: userId.concat(imageId).concat(sessionId),
         Expires: 300})
     }
+
+    async createSession(newItem:SessionItem){
+      await this.docClient.put({
+        TableName: this.workoutTable,
+        Item: newItem
+      }).promise()
+  }
 
 }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import Auth from '../auth/Auth'
 import { Segment, Card, Button } from 'semantic-ui-react'
-import { Session } from '../types/trainingData'
+import { Session, SessionRequest } from '../types/trainingData'
 import { SessionSegment } from './SessionSegment'
+import{ AddTrainingSession } from './popups/AddTrainingSession'
+import { createTrainingSession } from '../api/trainingplan-api'
 
 const session1: Session = {
     sessionId: '1',
@@ -26,6 +28,7 @@ export interface componentProps {
   
 export interface AppState {
     Sessions: Session[]
+    showPopupNewTrainingPlan: boolean
 }
 
 export class TrainingSessions extends Component<componentProps, AppState> {
@@ -34,7 +37,8 @@ export class TrainingSessions extends Component<componentProps, AppState> {
         Sessions: [
             session1,
             session2
-        ]
+        ],
+        showPopupNewTrainingPlan: false
     }
 
     constructor(props: componentProps) {
@@ -52,11 +56,33 @@ export class TrainingSessions extends Component<componentProps, AppState> {
         })
     }
 
+    toggleAddSession() {
+        this.setState({
+            showPopupNewTrainingPlan: !this.state.showPopupNewTrainingPlan,
+        })
+    }
+
+    async addTrainingSession(event: any) {
+        const tempList: Session[] = this.state.Sessions
+        const newSessionRequest: SessionRequest = {
+            name: event.target.dataset.name,
+            date: event.target.dataset.date,
+            description: event.target.dataset.description
+        }
+        const newSession = await createTrainingSession(this.props.auth.getIdToken(), newSessionRequest)
+
+        tempList.push(newSession)
+        this.setState({
+            Sessions: tempList,
+            showPopupNewTrainingPlan: !this.state.showPopupNewTrainingPlan
+        })
+    }
+
     render() {
         return (
             <div style = {{marginTop: '5em'}}>
             <Segment>
-                <Button basic color='purple'>
+                <Button basic color='purple' onClick = {this.toggleAddSession.bind(this)}>
                     Add Training Session
                 </Button>
             </Segment>
@@ -71,6 +97,18 @@ export class TrainingSessions extends Component<componentProps, AppState> {
                     )}         
                 </Card.Group>
             </Segment>  
+
+            {this.state.showPopupNewTrainingPlan ? 
+            <AddTrainingSession 
+                active= {this.state.showPopupNewTrainingPlan} 
+                onClick= {this.toggleAddSession.bind(this)}
+                auth = {this.props.auth}
+                updateHandler = {this.addTrainingSession.bind(this)}
+            >
+            </AddTrainingSession>
+            : null
+          }  
+
             </div> 
         )
     }

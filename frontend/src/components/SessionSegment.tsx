@@ -34,7 +34,8 @@ export class SessionSegment extends Component<componentProps, componentState> {
             <Card style = {{marginTop: '0.5em', marginLeft: '0.5em', marginRight: '0.5em', marginBottom: '0.5em'}}>
             <Image src={this.props.session.attachmentUrl} wrapped ui={false} />
             <Card.Content>
-            <Card.Header>{this.props.session.name} - {this.props.session.date}</Card.Header>
+            <Card.Header>{this.props.session.name}</Card.Header>
+            <Card.Meta>{this.props.session.date}</Card.Meta>
               <Card.Description>
                 {this.props.session.description}
               </Card.Description>

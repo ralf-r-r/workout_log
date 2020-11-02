@@ -1,11 +1,14 @@
-export interface TrainingData {
+export interface SessionItem {
   userId: string
-  trainingPlanId: string
+  sessionId: string
+  name: string
+  date: string
+  description: string
   attachmentUrl?: string
 }
 
-export interface TrainingPlans {
-  userId: string
-  trainingPlanId: number
-  attachmentUrl?: string
+export interface SessionRequest {
+  name: string
+  date: string
+  description: string
 }

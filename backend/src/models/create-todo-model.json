@@ -1,15 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "todo",
+    "title": "session",
     "type": "object",
     "properties": {
       "name": {
         "type": "string"
       },
-      "dueDate": {
+      "date": {
+        "type": "string"
+      },
+      "description": {
         "type": "string"
       }
     },
-    "required": ["name", "dueDate"],
+    "required": ["name", "date","description"],
     "additionalProperties": false
 }

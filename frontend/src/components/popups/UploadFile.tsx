@@ -81,10 +81,21 @@ export class UploadFile extends React.PureComponent<ComponentProps, ComponentSta
                 <label>Select File</label>
                 <input type="file" onChange={this.onFileChangeHandler.bind(this)} />
             </Form.Field>
-            <Button type='submit' onClick={this.props.onClick} color='red'> Cancel </Button>
-            <Button type='submit' onClick={this.uploadToServer} color='green' > Upload </Button>
+            <Form.Field>
+              {this.state.uploadState === UploadState.FetchingPresignedUrl && <label> Uploading image metadata</label>}
+              {this.state.uploadState === UploadState.UploadingFile && <label>Uploading file</label>}
+            </Form.Field>
+            <Button type='submit' onClick={this.props.onClick} color='red'> Close </Button>
+            <Button 
+            type='submit' 
+            onClick={this.uploadToServer} 
+            color='green'
+            loading={this.state.uploadState !== UploadState.NoUpload}> 
+              Upload 
+            </Button>
             </Form>
         </DimmerTemplate>
     )
   }
 }
+

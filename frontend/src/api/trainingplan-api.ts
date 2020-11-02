@@ -1,5 +1,6 @@
 import { apiEndpoint } from '../config'
 import Axios from 'axios'
+import { Session, SessionRequest } from '../types/trainingData'
 
 interface trainingPromise {
   attachmentUrl:string
@@ -32,4 +33,14 @@ export async function getTrainingSessions(idToken: string): Promise<trainingProm
     },
   })
   return response.data
+}
+
+export async function createTrainingSession(idToken: string,newSessionRequest: SessionRequest): Promise<Session> {
+  const response = await Axios.post(`${apiEndpoint}/createsession`,  JSON.stringify(newSessionRequest), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+  return response.data.item
 }

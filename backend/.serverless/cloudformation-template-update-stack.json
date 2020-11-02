@@ -62,10 +62,10 @@
         "LogGroupName": "/aws/lambda/serverless-workout-dev-Auth"
       }
     },
-    "GetTrainingPlansLogGroup": {
+    "CreateSessionLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/serverless-workout-dev-GetTrainingPlans"
+        "LogGroupName": "/aws/lambda/serverless-workout-dev-CreateSession"
       }
     },
     "GenUpUrlLogGroup": {
@@ -168,7 +168,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-workout/dev/1604337992462-2020-11-02T17:26:32.462Z/serverless-workout.zip"
+          "S3Key": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z/serverless-workout.zip"
         },
         "FunctionName": "serverless-workout-dev-Auth",
         "Handler": "src/lambda/auth/auth0Authorizer.handler",
@@ -186,7 +186,7 @@
         },
         "Environment": {
           "Variables": {
-            "WORKOUT_TABLE": "trainingplan-v04-dev",
+            "WORKOUT_TABLE": "trainingplan-v05-dev",
             "TRAININGPLAN_S3_BUCKET": "sls-workout-img-v2-dev"
           }
         }
@@ -195,31 +195,31 @@
         "AuthLogGroup"
       ]
     },
-    "AuthLambdaVersionGUEBIfMywtkRJvFW42q0Xf7h5ZkUEOqvQY0fAm4": {
+    "AuthLambdaVersionBD3ODnrYYeTMgBFjuficUeckXkBUiyDo9uJO14YU0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLambdaFunction"
         },
-        "CodeSha256": "r4yfDDDjta9yxFlIktKzMLFhlOW8ahp0PZwn8CmZc1I="
+        "CodeSha256": "TmiCWuhkGFeaB1J0yYOTGXIi8CBHHRj6sVk/4fIOxnU="
       }
     },
-    "GetTrainingPlansLambdaFunction": {
+    "CreateSessionLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-workout/dev/1604337992462-2020-11-02T17:26:32.462Z/serverless-workout.zip"
+          "S3Key": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z/serverless-workout.zip"
         },
-        "FunctionName": "serverless-workout-dev-GetTrainingPlans",
-        "Handler": "src/lambda/http/getTrainingPlans.handler",
+        "FunctionName": "serverless-workout-dev-CreateSession",
+        "Handler": "src/lambda/http/createSession.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
-            "GetTrainingPlansIamRoleLambdaExecution",
+            "CreateSessionIamRoleLambdaExecution",
             "Arn"
           ]
         },
@@ -230,24 +230,24 @@
         },
         "Environment": {
           "Variables": {
-            "WORKOUT_TABLE": "trainingplan-v04-dev",
+            "WORKOUT_TABLE": "trainingplan-v05-dev",
             "TRAININGPLAN_S3_BUCKET": "sls-workout-img-v2-dev"
           }
         }
       },
       "DependsOn": [
-        "GetTrainingPlansIamRoleLambdaExecution",
-        "GetTrainingPlansLogGroup"
+        "CreateSessionIamRoleLambdaExecution",
+        "CreateSessionLogGroup"
       ]
     },
-    "GetTrainingPlansLambdaVersioneRfV1umiuiw07QB4S9LmA9OEZGAWvUJKnEMICVXAI": {
+    "CreateSessionLambdaVersionC2J5JNtAYMhe1XzRU6uo1lEvUoMv7KMJgQPQ79tLYA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "GetTrainingPlansLambdaFunction"
+          "Ref": "CreateSessionLambdaFunction"
         },
-        "CodeSha256": "r4yfDDDjta9yxFlIktKzMLFhlOW8ahp0PZwn8CmZc1I="
+        "CodeSha256": "TmiCWuhkGFeaB1J0yYOTGXIi8CBHHRj6sVk/4fIOxnU="
       }
     },
     "GenUpUrlLambdaFunction": {
@@ -257,7 +257,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-workout/dev/1604337992462-2020-11-02T17:26:32.462Z/serverless-workout.zip"
+          "S3Key": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z/serverless-workout.zip"
         },
         "FunctionName": "serverless-workout-dev-genUpUrl",
         "Handler": "src/lambda/http/generateUploadUrl.handler",
@@ -275,7 +275,7 @@
         },
         "Environment": {
           "Variables": {
-            "WORKOUT_TABLE": "trainingplan-v04-dev",
+            "WORKOUT_TABLE": "trainingplan-v05-dev",
             "TRAININGPLAN_S3_BUCKET": "sls-workout-img-v2-dev"
           }
         }
@@ -285,14 +285,14 @@
         "GenUpUrlLogGroup"
       ]
     },
-    "GenUpUrlLambdaVersion9S6STaHgjqZdiU9aeNCx3F762If8VGWgiyHvS925s": {
+    "GenUpUrlLambdaVersionf0efM4eY2HSZZTFkuK42Or9bD9FDsNCsH46GUmUGVyg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GenUpUrlLambdaFunction"
         },
-        "CodeSha256": "r4yfDDDjta9yxFlIktKzMLFhlOW8ahp0PZwn8CmZc1I="
+        "CodeSha256": "TmiCWuhkGFeaB1J0yYOTGXIi8CBHHRj6sVk/4fIOxnU="
       }
     },
     "ApiGatewayRestApi": {
@@ -307,7 +307,7 @@
         "Policy": ""
       }
     },
-    "ApiGatewayResourceTrainingplans": {
+    "ApiGatewayResourceCreatesession": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -316,7 +316,7 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "trainingplans",
+        "PathPart": "createsession",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -361,7 +361,7 @@
         }
       }
     },
-    "ApiGatewayMethodTrainingplansOptions": {
+    "ApiGatewayMethodCreatesessionOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -390,7 +390,7 @@
               "ResponseParameters": {
                 "method.response.header.Access-Control-Allow-Origin": "'*'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
               },
               "ResponseTemplates": {
                 "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
@@ -399,7 +399,7 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceTrainingplans"
+          "Ref": "ApiGatewayResourceCreatesession"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -451,13 +451,54 @@
         }
       }
     },
-    "ApiGatewayMethodTrainingplansGet": {
+    "ApiGatewayMethodCreatesessionPostApplicationJsonModel": {
+      "Type": "AWS::ApiGateway::Model",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ContentType": "application/json",
+        "Schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "session",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "date",
+            "description"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "ApiGatewayMethodCreatesessionPostValidator": {
+      "Type": "AWS::ApiGateway::RequestValidator",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ValidateRequestBody": true,
+        "ValidateRequestParameters": true
+      }
+    },
+    "ApiGatewayMethodCreatesessionPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
-        "HttpMethod": "GET",
+        "HttpMethod": "POST",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceTrainingplans"
+          "Ref": "ApiGatewayResourceCreatesession"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -485,7 +526,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "GetTrainingPlansLambdaFunction",
+                    "CreateSessionLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -494,7 +535,15 @@
             ]
           }
         },
-        "MethodResponses": []
+        "MethodResponses": [],
+        "RequestValidatorId": {
+          "Ref": "ApiGatewayMethodCreatesessionPostValidator"
+        },
+        "RequestModels": {
+          "application/json": {
+            "Ref": "ApiGatewayMethodCreatesessionPostApplicationJsonModel"
+          }
+        }
       },
       "DependsOn": "AuthApiGatewayAuthorizer"
     },
@@ -579,7 +628,7 @@
         "Type": "TOKEN"
       }
     },
-    "ApiGatewayDeployment1604337977083": {
+    "ApiGatewayDeployment1604352802293": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -588,18 +637,18 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodTrainingplansOptions",
+        "ApiGatewayMethodCreatesessionOptions",
         "ApiGatewayMethodTrainingdataAttachmentSessionidVarOptions",
-        "ApiGatewayMethodTrainingplansGet",
+        "ApiGatewayMethodCreatesessionPost",
         "ApiGatewayMethodTrainingdataAttachmentSessionidVarPost"
       ]
     },
-    "GetTrainingPlansLambdaPermissionApiGateway": {
+    "CreateSessionLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "GetTrainingPlansLambdaFunction",
+            "CreateSessionLambdaFunction",
             "Arn"
           ]
         },
@@ -705,7 +754,7 @@
         }
       }
     },
-    "GetTrainingPlansIamRoleLambdaExecution": {
+    "CreateSessionIamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -747,23 +796,16 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-workout-dev-GetTrainingPlans:*:*"
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-workout-dev-CreateSession:*:*"
                     }
                   ]
                 },
                 {
                   "Effect": "Allow",
                   "Action": [
-                    "dynamodb:Query"
+                    "dynamodb:PutItem"
                   ],
-                  "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v04-dev"
-                },
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "dynamodb:GetItem"
-                  ],
-                  "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v04-dev"
+                  "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v05-dev"
                 },
                 {
                   "Effect": "Allow",
@@ -786,7 +828,7 @@
             [
               "serverless-workout",
               "dev",
-              "GetTrainingPlans",
+              "CreateSession",
               {
                 "Ref": "AWS::Region"
               },
@@ -848,7 +890,7 @@
                   "Action": [
                     "dynamodb:UpdateItem"
                   ],
-                  "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v04-dev"
+                  "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v05-dev"
                 },
                 {
                   "Effect": "Allow",
@@ -914,7 +956,7 @@
           }
         ],
         "BillingMode": "PAY_PER_REQUEST",
-        "TableName": "trainingplan-v04-dev"
+        "TableName": "trainingplan-v05-dev"
       }
     },
     "AttachmentsBucket": {
@@ -985,19 +1027,19 @@
     "AuthLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AuthLambdaVersionGUEBIfMywtkRJvFW42q0Xf7h5ZkUEOqvQY0fAm4"
+        "Ref": "AuthLambdaVersionBD3ODnrYYeTMgBFjuficUeckXkBUiyDo9uJO14YU0"
       }
     },
-    "GetTrainingPlansLambdaFunctionQualifiedArn": {
+    "CreateSessionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetTrainingPlansLambdaVersioneRfV1umiuiw07QB4S9LmA9OEZGAWvUJKnEMICVXAI"
+        "Ref": "CreateSessionLambdaVersionC2J5JNtAYMhe1XzRU6uo1lEvUoMv7KMJgQPQ79tLYA"
       }
     },
     "GenUpUrlLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GenUpUrlLambdaVersion9S6STaHgjqZdiU9aeNCx3F762If8VGWgiyHvS925s"
+        "Ref": "GenUpUrlLambdaVersionf0efM4eY2HSZZTFkuK42Or9bD9FDsNCsH46GUmUGVyg"
       }
     },
     "ServiceEndpoint": {

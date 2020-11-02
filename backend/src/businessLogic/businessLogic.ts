@@ -1,6 +1,8 @@
 import { DataAccess } from '../dataAccess/dataAccess'
 import { createLogger } from '../utils/logger'
+import { SessionItem } from '../models/TrainingData'
 import * as uuid from 'uuid'
+import { CreateSessionRequest } from '../requests/CreateSessionRequest'
 
 const logger = createLogger('todo_app_logger')
 const dataAccess = new DataAccess()
@@ -23,4 +25,23 @@ export async function getTrainingPlans(userId: string) {
         userId: userId,
     })
     return await dataAccess.getTrainingPlans(userId)
+}
+
+export async function createSession(newSessionRequest: CreateSessionRequest, userId:string) {
+    const sessionId: string = uuid.v4()
+  
+    const newItem:SessionItem  = {
+      userId: userId,
+      sessionId: sessionId,
+      ...newSessionRequest,
+    }
+
+    await dataAccess.createSession(newItem)
+
+    logger.info('Created new item', {
+        userId: userId,
+        sessionId: sessionId,  
+    })
+
+    return newItem
 }
