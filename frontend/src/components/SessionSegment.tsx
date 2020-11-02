@@ -32,7 +32,7 @@ export class SessionSegment extends Component<componentProps, componentState> {
         return(
             <div>
             <Card style = {{marginTop: '0.5em', marginLeft: '0.5em', marginRight: '0.5em', marginBottom: '0.5em'}}>
-            <Image src={this.props.session.attachmentUrl} wrapped ui={false} />
+            <Image src={this.props.session.attachmentUrl} wrapped ui = {false} size='medium'/>
             <Card.Content>
             <Card.Header>{this.props.session.name}</Card.Header>
             <Card.Meta>{this.props.session.date}</Card.Meta>

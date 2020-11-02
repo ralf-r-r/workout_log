@@ -4,7 +4,7 @@ import { Segment, Card, Button } from 'semantic-ui-react'
 import { Session, SessionRequest } from '../types/trainingData'
 import { SessionSegment } from './SessionSegment'
 import{ AddTrainingSession } from './popups/AddTrainingSession'
-import { createTrainingSession } from '../api/trainingplan-api'
+import { createTrainingSession, getSessions } from '../api/trainingplan-api'
 
 const session1: Session = {
     sessionId: '1',
@@ -34,16 +34,26 @@ export interface AppState {
 export class TrainingSessions extends Component<componentProps, AppState> {
 
     state: AppState = {
-        Sessions: [
-            session1,
-            session2
-        ],
+        Sessions: [],
         showPopupNewTrainingPlan: false
     }
 
     constructor(props: componentProps) {
         super(props)
     }
+
+    async componentDidMount() {
+        try {
+          const sessionItems = await getSessions(this.props.auth.getIdToken())
+          this.setState({
+            Sessions: sessionItems,
+            showPopupNewTrainingPlan: false
+          })
+        } catch (e) {
+          alert(`Failed to fetch todos: ${e.message}`)
+        }
+      }
+
 
     async onFileUpload(url:string, id: string){
         this.setState({

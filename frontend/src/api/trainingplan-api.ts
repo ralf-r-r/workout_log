@@ -2,10 +2,6 @@ import { apiEndpoint } from '../config'
 import Axios from 'axios'
 import { Session, SessionRequest } from '../types/trainingData'
 
-interface trainingPromise {
-  attachmentUrl:string
-}
-
 interface UrlResult {
   uploadUrl: string
   attachmentUrl: string
@@ -25,14 +21,14 @@ export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void>
   await Axios.put(uploadUrl, file)
 }
 
-export async function getTrainingSessions(idToken: string): Promise<trainingPromise> {  
-  const response = await Axios.get(`${apiEndpoint}/trainingsessions`, {
+export async function getSessions(idToken: string): Promise<Session[]> {  
+  const response = await Axios.get(`${apiEndpoint}/sessions`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
     },
   })
-  return response.data
+  return response.data.items
 }
 
 export async function createTrainingSession(idToken: string,newSessionRequest: SessionRequest): Promise<Session> {
@@ -44,3 +40,4 @@ export async function createTrainingSession(idToken: string,newSessionRequest: S
   })
   return response.data.item
 }
+

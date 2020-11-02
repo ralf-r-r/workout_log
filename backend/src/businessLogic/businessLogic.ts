@@ -45,3 +45,10 @@ export async function createSession(newSessionRequest: CreateSessionRequest, use
 
     return newItem
 }
+
+export async function getSessions(userId: string) {
+    logger.info('Getting all todo items', {
+        userId: userId,
+    })
+    return await dataAccess.getSessions(userId)
+}

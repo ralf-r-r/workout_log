@@ -60,4 +60,15 @@ export class DataAccess {
       }).promise()
   }
 
+  async getSessions(userId: string){
+    return await this.docClient.query({
+        TableName: this.workoutTable,
+        KeyConditionExpression: 'userId = :userId',
+        ExpressionAttributeValues: {
+          ':userId': userId
+        }
+      })
+      .promise()
+}
+
 }

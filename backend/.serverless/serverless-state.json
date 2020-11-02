@@ -83,6 +83,12 @@
               "LogGroupName": "/aws/lambda/serverless-workout-dev-Auth"
             }
           },
+          "GetSessionsLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-workout-dev-GetSessions"
+            }
+          },
           "CreateSessionLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -189,7 +195,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-Auth",
               "Handler": "src/lambda/auth/auth0Authorizer.handler",
@@ -216,14 +222,59 @@
               "AuthLogGroup"
             ]
           },
-          "AuthLambdaVersionBD3ODnrYYeTMgBFjuficUeckXkBUiyDo9uJO14YU0": {
+          "AuthLambdaVersionMOab4GqXOOr1qnzoLln5TogHM8Xbk3bGJaJEVKgb4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthLambdaFunction"
               },
-              "CodeSha256": "TmiCWuhkGFeaB1J0yYOTGXIi8CBHHRj6sVk/4fIOxnU="
+              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
+            }
+          },
+          "GetSessionsLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
+              },
+              "FunctionName": "serverless-workout-dev-GetSessions",
+              "Handler": "src/lambda/http/getSessions.handler",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "GetSessionsIamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "TracingConfig": {
+                "Mode": "Active"
+              },
+              "Environment": {
+                "Variables": {
+                  "WORKOUT_TABLE": "trainingplan-v05-dev",
+                  "TRAININGPLAN_S3_BUCKET": "sls-workout-img-v2-dev"
+                }
+              }
+            },
+            "DependsOn": [
+              "GetSessionsIamRoleLambdaExecution",
+              "GetSessionsLogGroup"
+            ]
+          },
+          "GetSessionsLambdaVersion9oTzh5q8CUYgLkbmlsPYxxPildtMDP0vafeSdOBPB4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetSessionsLambdaFunction"
+              },
+              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
             }
           },
           "CreateSessionLambdaFunction": {
@@ -233,7 +284,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-CreateSession",
               "Handler": "src/lambda/http/createSession.handler",
@@ -261,14 +312,14 @@
               "CreateSessionLogGroup"
             ]
           },
-          "CreateSessionLambdaVersionC2J5JNtAYMhe1XzRU6uo1lEvUoMv7KMJgQPQ79tLYA": {
+          "CreateSessionLambdaVersionUh2I88baN3aKzVvMoLSKAa2g4MCBgXuzirji2hXEdyk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateSessionLambdaFunction"
               },
-              "CodeSha256": "TmiCWuhkGFeaB1J0yYOTGXIi8CBHHRj6sVk/4fIOxnU="
+              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
             }
           },
           "GenUpUrlLambdaFunction": {
@@ -278,7 +329,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-genUpUrl",
               "Handler": "src/lambda/http/generateUploadUrl.handler",
@@ -306,14 +357,14 @@
               "GenUpUrlLogGroup"
             ]
           },
-          "GenUpUrlLambdaVersionf0efM4eY2HSZZTFkuK42Or9bD9FDsNCsH46GUmUGVyg": {
+          "GenUpUrlLambdaVersioniJKm9JMt5JutsPGKWblKjuacngD1wVBZrtOQDGUyc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GenUpUrlLambdaFunction"
               },
-              "CodeSha256": "TmiCWuhkGFeaB1J0yYOTGXIi8CBHHRj6sVk/4fIOxnU="
+              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
             }
           },
           "ApiGatewayRestApi": {
@@ -326,6 +377,21 @@
                 ]
               },
               "Policy": ""
+            }
+          },
+          "ApiGatewayResourceSessions": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "sessions",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
             }
           },
           "ApiGatewayResourceCreatesession": {
@@ -377,6 +443,51 @@
                 "Ref": "ApiGatewayResourceTrainingdataAttachment"
               },
               "PathPart": "{sessionId}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodSessionsOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSessions"
+              },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -471,6 +582,53 @@
                 "Ref": "ApiGatewayRestApi"
               }
             }
+          },
+          "ApiGatewayMethodSessionsGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSessions"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "CUSTOM",
+              "AuthorizerId": {
+                "Ref": "AuthApiGatewayAuthorizer"
+              },
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetSessionsLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": "AuthApiGatewayAuthorizer"
           },
           "ApiGatewayMethodCreatesessionPostApplicationJsonModel": {
             "Type": "AWS::ApiGateway::Model",
@@ -649,7 +807,7 @@
               "Type": "TOKEN"
             }
           },
-          "ApiGatewayDeployment1604352802293": {
+          "ApiGatewayDeployment1604354015779": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -658,18 +816,20 @@
               "StageName": "dev"
             },
             "DependsOn": [
+              "ApiGatewayMethodSessionsOptions",
               "ApiGatewayMethodCreatesessionOptions",
               "ApiGatewayMethodTrainingdataAttachmentSessionidVarOptions",
+              "ApiGatewayMethodSessionsGet",
               "ApiGatewayMethodCreatesessionPost",
               "ApiGatewayMethodTrainingdataAttachmentSessionidVarPost"
             ]
           },
-          "CreateSessionLambdaPermissionApiGateway": {
+          "GetSessionsLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CreateSessionLambdaFunction",
+                  "GetSessionsLambdaFunction",
                   "Arn"
                 ]
               },
@@ -738,6 +898,43 @@
               }
             }
           },
+          "CreateSessionLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreateSessionLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
           "GenUpUrlLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
@@ -773,6 +970,98 @@
                   ]
                 ]
               }
+            }
+          },
+          "GetSessionsIamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "serverless-workout",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-workout-dev-GetSessions:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:Query"
+                        ],
+                        "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v05-dev"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:GetItem"
+                        ],
+                        "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v05-dev"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "xray:PutTraceSegments",
+                          "xray:PutTelemetryRecords"
+                        ],
+                        "Resource": [
+                          "*"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "serverless-workout",
+                    "dev",
+                    "GetSessions",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              },
+              "ManagedPolicyArns": []
             }
           },
           "CreateSessionIamRoleLambdaExecution": {
@@ -1048,19 +1337,25 @@
           "AuthLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthLambdaVersionBD3ODnrYYeTMgBFjuficUeckXkBUiyDo9uJO14YU0"
+              "Ref": "AuthLambdaVersionMOab4GqXOOr1qnzoLln5TogHM8Xbk3bGJaJEVKgb4"
+            }
+          },
+          "GetSessionsLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetSessionsLambdaVersion9oTzh5q8CUYgLkbmlsPYxxPildtMDP0vafeSdOBPB4"
             }
           },
           "CreateSessionLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateSessionLambdaVersionC2J5JNtAYMhe1XzRU6uo1lEvUoMv7KMJgQPQ79tLYA"
+              "Ref": "CreateSessionLambdaVersionUh2I88baN3aKzVvMoLSKAa2g4MCBgXuzirji2hXEdyk"
             }
           },
           "GenUpUrlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GenUpUrlLambdaVersionf0efM4eY2HSZZTFkuK42Or9bD9FDsNCsH46GUmUGVyg"
+              "Ref": "GenUpUrlLambdaVersioniJKm9JMt5JutsPGKWblKjuacngD1wVBZrtOQDGUyc"
             }
           },
           "ServiceEndpoint": {
@@ -1175,7 +1470,66 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "AuthLambdaVersionBD3ODnrYYeTMgBFjuficUeckXkBUiyDo9uJO14YU0"
+        "versionLogicalId": "AuthLambdaVersionMOab4GqXOOr1qnzoLln5TogHM8Xbk3bGJaJEVKgb4"
+      },
+      "GetSessions": {
+        "handler": "src/lambda/http/getSessions.handler",
+        "events": [
+          {
+            "http": {
+              "method": "get",
+              "path": "sessions",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "authorizer": {
+                "name": "Auth",
+                "arn": {
+                  "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"AuthLambdaPermissionApiGateway\"][\"Properties\"][\"FunctionName\"]"
+                },
+                "managedExternally": false,
+                "identitySource": "method.request.header.Authorization"
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetSessionsIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][1]"
+          },
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetSessionsIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][2]"
+          },
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetSessionsIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][3]"
+          }
+        ],
+        "name": "serverless-workout-dev-GetSessions",
+        "package": {
+          "artifact": ".serverless/serverless-workout.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {},
+        "versionLogicalId": "GetSessionsLambdaVersion9oTzh5q8CUYgLkbmlsPYxxPildtMDP0vafeSdOBPB4"
       },
       "CreateSession": {
         "handler": "src/lambda/http/createSession.handler",
@@ -1257,7 +1611,7 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "CreateSessionLambdaVersionC2J5JNtAYMhe1XzRU6uo1lEvUoMv7KMJgQPQ79tLYA"
+        "versionLogicalId": "CreateSessionLambdaVersionUh2I88baN3aKzVvMoLSKAa2g4MCBgXuzirji2hXEdyk"
       },
       "genUpUrl": {
         "handler": "src/lambda/http/generateUploadUrl.handler",
@@ -1316,7 +1670,7 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "GenUpUrlLambdaVersionf0efM4eY2HSZZTFkuK42Or9bD9FDsNCsH46GUmUGVyg"
+        "versionLogicalId": "GenUpUrlLambdaVersioniJKm9JMt5JutsPGKWblKjuacngD1wVBZrtOQDGUyc"
       }
     },
     "resources": {
@@ -1429,7 +1783,7 @@
         "$ref": "$[\"service\"][\"resources\"]"
       },
       "package": {
-        "artifactDirectoryName": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z"
+        "artifactDirectoryName": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z"
       },
       "layers": {
         "$ref": "$[\"service\"][\"layers\"]"
@@ -1439,7 +1793,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-workout/dev/1604352817982-2020-11-02T21:33:37.982Z",
+    "artifactDirectoryName": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z",
     "artifact": ""
   }
 }
