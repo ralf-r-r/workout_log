@@ -19,7 +19,8 @@ sls deploy -v
 To run the frontend on localhost:3000 navigate into the frontend folder and execute the following in the terminal
 
 ```
-npm start```
+npm start
+```
 
 This should start a development server with the React application that will interact with the serverless backend on aws.
 
