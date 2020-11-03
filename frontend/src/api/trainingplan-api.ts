@@ -50,3 +50,13 @@ export async function deleteTrainingSession(idToken: string, sessionId: string):
   })
 }
 
+export async function updateSession(idToken: string,
+  sessionId: string,
+  newSessionRequest: SessionRequest): Promise<void> {
+  await Axios.patch(`${apiEndpoint}/updatesession/${sessionId}`,  JSON.stringify(newSessionRequest), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+}

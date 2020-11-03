@@ -4,23 +4,27 @@ import { Card, Button, Image } from 'semantic-ui-react'
 import { Session } from '../types/trainingData'
 import{ UploadFile } from './popups/UploadFile'
 import{ DeleteSession } from './popups/DeleteSession'
+import{ EditSession } from './popups/EditSession'
 
 export interface componentProps {
     auth: Auth
     session: Session
     onUpload: any
     onDelete: any
+    onEdit: any
   }
   
 export interface componentState {
   showPopupUploadFile: boolean
   showDeleteSession: boolean
+  showEditSession: boolean
 }
 
 export class SessionSegment extends Component<componentProps, componentState> {
   state: componentState = {
     showPopupUploadFile: false,
-    showDeleteSession: false
+    showDeleteSession: false,
+    showEditSession: false
   }
   constructor(props: componentProps) {
     super(props)
@@ -34,7 +38,13 @@ export class SessionSegment extends Component<componentProps, componentState> {
     })
   } 
 
-  toggleDeleteSessoin() {
+  toggleEditSession() {
+    this.setState({
+      showEditSession: !this.state.showEditSession,
+    })
+  } 
+
+  toggleDeleteSession() {
     this.setState({
       showDeleteSession: !this.state.showDeleteSession,
     })
@@ -62,7 +72,7 @@ export class SessionSegment extends Component<componentProps, componentState> {
               </Card.Content>
               <Card.Content extra>
                 <div className='ui three buttons'>
-                <Button basic color='green'  >
+                <Button basic color='green'  onClick = {this.toggleEditSession.bind(this)}>
                     Edit 
                 </Button>
                 <Button basic color='purple' onClick = {this.toggleUploadFile.bind(this)} >
@@ -90,12 +100,24 @@ export class SessionSegment extends Component<componentProps, componentState> {
         {this.state.showDeleteSession ? 
             <DeleteSession 
                 active= {this.state.showDeleteSession} 
-                onCancel= {this.toggleDeleteSessoin.bind(this)}
+                onCancel= {this.toggleDeleteSession.bind(this)}
                 onDelete = {this.props.onDelete}
                 auth = {this.props.auth}
                 sessionId = {this.props.session.sessionId}
             >
             </DeleteSession>
+            : null
+          }  
+
+        {this.state.showEditSession ? 
+            <EditSession 
+                active= {this.state.showEditSession} 
+                onClick = {this.toggleEditSession.bind(this)}
+                updateHandler = {this.props.onEdit}
+                auth = {this.props.auth}
+                sessionId = {this.props.session.sessionId}
+            >
+            </EditSession>
             : null
           }  
 

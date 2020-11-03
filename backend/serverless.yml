@@ -69,7 +69,30 @@ functions:
         Resource:
           - "*"
 
-  DeleteTodo:
+  UpdateSession:
+    handler: src/lambda/http/updateSession.handler
+    events:
+      - http:
+          method: patch
+          path: updatesession/{sessionId}
+          cors: True
+          authorizer: Auth
+          request:
+            schema:
+              application/json: ${file(src/models/create-todo-model.json)} # relative to where the serverless.yaml is
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.WORKOUT_TABLE}
+      - Effect: Allow
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
+        
+  DeleteSession:
     handler: src/lambda/http/deleteSession.handler
     events:
       - http:

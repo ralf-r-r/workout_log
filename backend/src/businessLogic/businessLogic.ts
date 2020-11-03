@@ -2,7 +2,7 @@ import { DataAccess } from '../dataAccess/dataAccess'
 import { createLogger } from '../utils/logger'
 import { SessionItem } from '../models/TrainingData'
 import * as uuid from 'uuid'
-import { CreateSessionRequest } from '../requests/CreateSessionRequest'
+import { SessionRequest } from '../models/TrainingData'
 
 const logger = createLogger('todo_app_logger')
 const dataAccess = new DataAccess()
@@ -27,7 +27,7 @@ export async function getTrainingPlans(userId: string) {
     return await dataAccess.getTrainingPlans(userId)
 }
 
-export async function createSession(newSessionRequest: CreateSessionRequest, userId:string) {
+export async function createSession(newSessionRequest: SessionRequest, userId:string) {
     const sessionId: string = uuid.v4()
   
     const newItem:SessionItem  = {
@@ -59,4 +59,12 @@ export async function deleteSession(userId: string, sessionId: string) {
         sessionId: sessionId,  
     })
     await dataAccess.deleteSession(userId, sessionId)
+}
+
+export async function updateSession(userId:string, sessionId:string, updatedSession: SessionRequest) {
+    logger.info('Updating todo item', {
+        userId: userId,
+        sessionId: sessionId,  
+    })
+    await dataAccess.updateSession(userId, sessionId, updatedSession)
 }

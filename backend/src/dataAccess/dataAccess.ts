@@ -1,6 +1,6 @@
 import * as AWS  from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
-import { SessionItem } from '../models/TrainingData'
+import { SessionItem, SessionRequest } from '../models/TrainingData'
 
 const AWSXRay = require('aws-xray-sdk')
 
@@ -79,6 +79,26 @@ async deleteSession(userId: string, sessionId: string){
         sessionId: sessionId
       }
   }).promise()
+}
+
+async updateSession(userId:string, sessionId:string, updatedSession: SessionRequest){
+  await this.docClient.update({
+    TableName: this.workoutTable,
+    Key: { userId: userId, sessionId: sessionId },
+    UpdateExpression: "set #name=:name, #date=:date, #description=:description",
+    ExpressionAttributeValues: {
+      ":name": updatedSession.name,
+      ":date": updatedSession.date,
+      ":description": updatedSession.description
+    },
+    ExpressionAttributeNames: {
+    '#name': 'name',
+    '#date': 'date',
+    '#description': 'description'
+  },
+    ReturnValues: "UPDATED_OLD"
+  })
+  .promise();
 }
 
 }

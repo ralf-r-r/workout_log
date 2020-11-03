@@ -16,11 +16,11 @@ interface ComponentProps {
 export class AddTrainingSession extends React.PureComponent<ComponentProps, Session> {
 
     state: Session = {
-        name: 'as',
-        date: "20201020" ,
-        description: 'asdf ',
+        name: ' ',
+        date: ' ' ,
+        description: '  ',
         attachmentUrl: ' ',
-        sessionId: 'asasdadsf'
+        sessionId: ' '
     }
 
     constructor(props: ComponentProps) {
