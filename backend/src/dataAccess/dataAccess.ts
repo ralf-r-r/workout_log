@@ -71,4 +71,14 @@ export class DataAccess {
       .promise()
 }
 
+async deleteSession(userId: string, sessionId: string){
+  await this.docClient.delete({
+      TableName: this.workoutTable,
+      Key: {
+        userId: userId,
+        sessionId: sessionId
+      }
+  }).promise()
+}
+
 }

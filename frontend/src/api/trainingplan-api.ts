@@ -41,3 +41,12 @@ export async function createTrainingSession(idToken: string,newSessionRequest: S
   return response.data.item
 }
 
+export async function deleteTrainingSession(idToken: string, sessionId: string): Promise<void>{
+  await Axios.delete(`${apiEndpoint}/deletesession/${sessionId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+}
+

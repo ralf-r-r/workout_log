@@ -95,6 +95,12 @@
               "LogGroupName": "/aws/lambda/serverless-workout-dev-CreateSession"
             }
           },
+          "DeleteTodoLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-workout-dev-DeleteTodo"
+            }
+          },
           "GenUpUrlLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -195,7 +201,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-Auth",
               "Handler": "src/lambda/auth/auth0Authorizer.handler",
@@ -222,14 +228,14 @@
               "AuthLogGroup"
             ]
           },
-          "AuthLambdaVersionMOab4GqXOOr1qnzoLln5TogHM8Xbk3bGJaJEVKgb4": {
+          "AuthLambdaVersionK8uZQK3ZV1FNuCGnK9u6Ck2m4B9HYYwFO23IX8ms": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthLambdaFunction"
               },
-              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
+              "CodeSha256": "SyrYszUrmrdr+IeK0wfI4icuUw3u2dFrE4srZcmHzvw="
             }
           },
           "GetSessionsLambdaFunction": {
@@ -239,7 +245,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-GetSessions",
               "Handler": "src/lambda/http/getSessions.handler",
@@ -267,14 +273,14 @@
               "GetSessionsLogGroup"
             ]
           },
-          "GetSessionsLambdaVersion9oTzh5q8CUYgLkbmlsPYxxPildtMDP0vafeSdOBPB4": {
+          "GetSessionsLambdaVersionVUyV4Xfoqnqp5okA9p5fuyXWQuxmRZcao4ekAejL0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetSessionsLambdaFunction"
               },
-              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
+              "CodeSha256": "SyrYszUrmrdr+IeK0wfI4icuUw3u2dFrE4srZcmHzvw="
             }
           },
           "CreateSessionLambdaFunction": {
@@ -284,7 +290,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-CreateSession",
               "Handler": "src/lambda/http/createSession.handler",
@@ -312,14 +318,59 @@
               "CreateSessionLogGroup"
             ]
           },
-          "CreateSessionLambdaVersionUh2I88baN3aKzVvMoLSKAa2g4MCBgXuzirji2hXEdyk": {
+          "CreateSessionLambdaVersionq5YAVP4Gu4IAx9tdaVcNYSg5yQaZzKWtnhLIQSQnLM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateSessionLambdaFunction"
               },
-              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
+              "CodeSha256": "SyrYszUrmrdr+IeK0wfI4icuUw3u2dFrE4srZcmHzvw="
+            }
+          },
+          "DeleteTodoLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z/serverless-workout.zip"
+              },
+              "FunctionName": "serverless-workout-dev-DeleteTodo",
+              "Handler": "src/lambda/http/deleteSession.handler",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "DeleteTodoIamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "TracingConfig": {
+                "Mode": "Active"
+              },
+              "Environment": {
+                "Variables": {
+                  "WORKOUT_TABLE": "trainingplan-v05-dev",
+                  "TRAININGPLAN_S3_BUCKET": "sls-workout-img-v2-dev"
+                }
+              }
+            },
+            "DependsOn": [
+              "DeleteTodoIamRoleLambdaExecution",
+              "DeleteTodoLogGroup"
+            ]
+          },
+          "DeleteTodoLambdaVersion8NslwC8CBZYtMVQInNTl8UNqIhZzgOhADqbpiSvgv0": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteTodoLambdaFunction"
+              },
+              "CodeSha256": "SyrYszUrmrdr+IeK0wfI4icuUw3u2dFrE4srZcmHzvw="
             }
           },
           "GenUpUrlLambdaFunction": {
@@ -329,7 +380,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z/serverless-workout.zip"
+                "S3Key": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z/serverless-workout.zip"
               },
               "FunctionName": "serverless-workout-dev-genUpUrl",
               "Handler": "src/lambda/http/generateUploadUrl.handler",
@@ -357,14 +408,14 @@
               "GenUpUrlLogGroup"
             ]
           },
-          "GenUpUrlLambdaVersioniJKm9JMt5JutsPGKWblKjuacngD1wVBZrtOQDGUyc": {
+          "GenUpUrlLambdaVersionTgS6qIJTV6kjY3m7nR2XdbgOaVzGUxTwTV0pYkTSuI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GenUpUrlLambdaFunction"
               },
-              "CodeSha256": "hfnzzmFi6w7lBec4KoX66e+R0kWwyj9lQmMUkm+d0g8="
+              "CodeSha256": "SyrYszUrmrdr+IeK0wfI4icuUw3u2dFrE4srZcmHzvw="
             }
           },
           "ApiGatewayRestApi": {
@@ -404,6 +455,33 @@
                 ]
               },
               "PathPart": "createsession",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceDeletesession": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "deletesession",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceDeletesessionSessionidVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceDeletesession"
+              },
+              "PathPart": "{sessionId}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -532,6 +610,51 @@
               },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceCreatesession"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodDeletesessionSessionidVarOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceDeletesessionSessionidVar"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -726,6 +849,53 @@
             },
             "DependsOn": "AuthApiGatewayAuthorizer"
           },
+          "ApiGatewayMethodDeletesessionSessionidVarDelete": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "DELETE",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceDeletesessionSessionidVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "CUSTOM",
+              "AuthorizerId": {
+                "Ref": "AuthApiGatewayAuthorizer"
+              },
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DeleteTodoLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": "AuthApiGatewayAuthorizer"
+          },
           "ApiGatewayMethodTrainingdataAttachmentSessionidVarPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -807,7 +977,7 @@
               "Type": "TOKEN"
             }
           },
-          "ApiGatewayDeployment1604354015779": {
+          "ApiGatewayDeployment1604398056688": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -818,9 +988,11 @@
             "DependsOn": [
               "ApiGatewayMethodSessionsOptions",
               "ApiGatewayMethodCreatesessionOptions",
+              "ApiGatewayMethodDeletesessionSessionidVarOptions",
               "ApiGatewayMethodTrainingdataAttachmentSessionidVarOptions",
               "ApiGatewayMethodSessionsGet",
               "ApiGatewayMethodCreatesessionPost",
+              "ApiGatewayMethodDeletesessionSessionidVarDelete",
               "ApiGatewayMethodTrainingdataAttachmentSessionidVarPost"
             ]
           },
@@ -904,6 +1076,43 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "CreateSessionLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "DeleteTodoLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteTodoLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1149,6 +1358,91 @@
               "ManagedPolicyArns": []
             }
           },
+          "DeleteTodoIamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "serverless-workout",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-workout-dev-DeleteTodo:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:DeleteItem"
+                        ],
+                        "Resource": "arn:aws:dynamodb:eu-central-1:*:table/trainingplan-v05-dev"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "xray:PutTraceSegments",
+                          "xray:PutTelemetryRecords"
+                        ],
+                        "Resource": [
+                          "*"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "serverless-workout",
+                    "dev",
+                    "DeleteTodo",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              },
+              "ManagedPolicyArns": []
+            }
+          },
           "GenUpUrlIamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -1337,25 +1631,31 @@
           "AuthLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthLambdaVersionMOab4GqXOOr1qnzoLln5TogHM8Xbk3bGJaJEVKgb4"
+              "Ref": "AuthLambdaVersionK8uZQK3ZV1FNuCGnK9u6Ck2m4B9HYYwFO23IX8ms"
             }
           },
           "GetSessionsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetSessionsLambdaVersion9oTzh5q8CUYgLkbmlsPYxxPildtMDP0vafeSdOBPB4"
+              "Ref": "GetSessionsLambdaVersionVUyV4Xfoqnqp5okA9p5fuyXWQuxmRZcao4ekAejL0"
             }
           },
           "CreateSessionLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateSessionLambdaVersionUh2I88baN3aKzVvMoLSKAa2g4MCBgXuzirji2hXEdyk"
+              "Ref": "CreateSessionLambdaVersionq5YAVP4Gu4IAx9tdaVcNYSg5yQaZzKWtnhLIQSQnLM"
+            }
+          },
+          "DeleteTodoLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteTodoLambdaVersion8NslwC8CBZYtMVQInNTl8UNqIhZzgOhADqbpiSvgv0"
             }
           },
           "GenUpUrlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GenUpUrlLambdaVersioniJKm9JMt5JutsPGKWblKjuacngD1wVBZrtOQDGUyc"
+              "Ref": "GenUpUrlLambdaVersionTgS6qIJTV6kjY3m7nR2XdbgOaVzGUxTwTV0pYkTSuI"
             }
           },
           "ServiceEndpoint": {
@@ -1470,7 +1770,7 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "AuthLambdaVersionMOab4GqXOOr1qnzoLln5TogHM8Xbk3bGJaJEVKgb4"
+        "versionLogicalId": "AuthLambdaVersionK8uZQK3ZV1FNuCGnK9u6Ck2m4B9HYYwFO23IX8ms"
       },
       "GetSessions": {
         "handler": "src/lambda/http/getSessions.handler",
@@ -1529,7 +1829,7 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "GetSessionsLambdaVersion9oTzh5q8CUYgLkbmlsPYxxPildtMDP0vafeSdOBPB4"
+        "versionLogicalId": "GetSessionsLambdaVersionVUyV4Xfoqnqp5okA9p5fuyXWQuxmRZcao4ekAejL0"
       },
       "CreateSession": {
         "handler": "src/lambda/http/createSession.handler",
@@ -1611,7 +1911,63 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "CreateSessionLambdaVersionUh2I88baN3aKzVvMoLSKAa2g4MCBgXuzirji2hXEdyk"
+        "versionLogicalId": "CreateSessionLambdaVersionq5YAVP4Gu4IAx9tdaVcNYSg5yQaZzKWtnhLIQSQnLM"
+      },
+      "DeleteTodo": {
+        "handler": "src/lambda/http/deleteSession.handler",
+        "events": [
+          {
+            "http": {
+              "method": "delete",
+              "path": "deletesession/{sessionId}",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "DELETE"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "authorizer": {
+                "name": "Auth",
+                "arn": {
+                  "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"AuthLambdaPermissionApiGateway\"][\"Properties\"][\"FunctionName\"]"
+                },
+                "managedExternally": false,
+                "identitySource": "method.request.header.Authorization"
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteTodoIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][1]"
+          },
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteTodoIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][2]"
+          }
+        ],
+        "name": "serverless-workout-dev-DeleteTodo",
+        "package": {
+          "artifact": ".serverless/serverless-workout.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteTodoLambdaVersion8NslwC8CBZYtMVQInNTl8UNqIhZzgOhADqbpiSvgv0"
       },
       "genUpUrl": {
         "handler": "src/lambda/http/generateUploadUrl.handler",
@@ -1670,7 +2026,7 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "GenUpUrlLambdaVersioniJKm9JMt5JutsPGKWblKjuacngD1wVBZrtOQDGUyc"
+        "versionLogicalId": "GenUpUrlLambdaVersionTgS6qIJTV6kjY3m7nR2XdbgOaVzGUxTwTV0pYkTSuI"
       }
     },
     "resources": {
@@ -1783,7 +2139,7 @@
         "$ref": "$[\"service\"][\"resources\"]"
       },
       "package": {
-        "artifactDirectoryName": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z"
+        "artifactDirectoryName": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z"
       },
       "layers": {
         "$ref": "$[\"service\"][\"layers\"]"
@@ -1793,7 +2149,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-workout/dev/1604354052520-2020-11-02T21:54:12.520Z",
+    "artifactDirectoryName": "serverless/serverless-workout/dev/1604398103293-2020-11-03T10:08:23.293Z",
     "artifact": ""
   }
 }

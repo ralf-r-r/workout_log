@@ -4,23 +4,8 @@ import { Segment, Card, Button } from 'semantic-ui-react'
 import { Session, SessionRequest } from '../types/trainingData'
 import { SessionSegment } from './SessionSegment'
 import{ AddTrainingSession } from './popups/AddTrainingSession'
-import { createTrainingSession, getSessions } from '../api/trainingplan-api'
+import { createTrainingSession, getSessions, deleteTrainingSession } from '../api/trainingplan-api'
 
-const session1: Session = {
-    sessionId: '1',
-    name: 'Leg Day',
-    date: '2020-10-10',
-    description: 'Squats 10 reps, Deadlifts 100 KG 5x5',
-    attachmentUrl: ''
-}
-
-const session2: Session = {
-    sessionId: '2',
-    name: 'back day',
-    date: '2020-10-15',
-    description: 'Squats 20 reps',
-    attachmentUrl: ''
-}
 
 export interface componentProps {
     auth: Auth
@@ -28,18 +13,19 @@ export interface componentProps {
   
 export interface AppState {
     Sessions: Session[]
-    showPopupNewTrainingPlan: boolean
+    showPopupNewTrainingSession: boolean
 }
 
 export class TrainingSessions extends Component<componentProps, AppState> {
 
     state: AppState = {
         Sessions: [],
-        showPopupNewTrainingPlan: false
+        showPopupNewTrainingSession: false
     }
 
     constructor(props: componentProps) {
         super(props)
+        this.onDeleteSession.bind(this)
     }
 
     async componentDidMount() {
@@ -47,7 +33,7 @@ export class TrainingSessions extends Component<componentProps, AppState> {
           const sessionItems = await getSessions(this.props.auth.getIdToken())
           this.setState({
             Sessions: sessionItems,
-            showPopupNewTrainingPlan: false
+            showPopupNewTrainingSession: false
           })
         } catch (e) {
           alert(`Failed to fetch todos: ${e.message}`)
@@ -61,14 +47,23 @@ export class TrainingSessions extends Component<componentProps, AppState> {
                 if (id === item.sessionId) {
                   return { ...item, attachmentUrl: url }
                 }
-                return item;
+                return item
               })
         })
     }
 
+    async onDeleteSession(event: any){
+        const sessionId: string = event.target.dataset.sessionid
+        await deleteTrainingSession(this.props.auth.getIdToken(), sessionId)
+        this.setState({Sessions: this.state.Sessions.filter(function(sess:Session) { 
+            return sess.sessionId !== sessionId
+            })
+        }) 
+    }
+
     toggleAddSession() {
         this.setState({
-            showPopupNewTrainingPlan: !this.state.showPopupNewTrainingPlan,
+            showPopupNewTrainingSession: !this.state.showPopupNewTrainingSession,
         })
     }
 
@@ -84,7 +79,7 @@ export class TrainingSessions extends Component<componentProps, AppState> {
         tempList.push(newSession)
         this.setState({
             Sessions: tempList,
-            showPopupNewTrainingPlan: !this.state.showPopupNewTrainingPlan
+            showPopupNewTrainingSession: !this.state.showPopupNewTrainingSession
         })
     }
 
@@ -102,15 +97,16 @@ export class TrainingSessions extends Component<componentProps, AppState> {
                         <SessionSegment 
                         auth = {this.props.auth}
                         session = {sess} 
-                        onUpload = {this.onFileUpload.bind(this)}>
+                        onUpload = {this.onFileUpload.bind(this)}
+                        onDelete = {this.onDeleteSession.bind(this)}>
                         </SessionSegment>
                     )}         
                 </Card.Group>
             </Segment>  
 
-            {this.state.showPopupNewTrainingPlan ? 
+            {this.state.showPopupNewTrainingSession ? 
             <AddTrainingSession 
-                active= {this.state.showPopupNewTrainingPlan} 
+                active= {this.state.showPopupNewTrainingSession} 
                 onClick= {this.toggleAddSession.bind(this)}
                 auth = {this.props.auth}
                 updateHandler = {this.addTrainingSession.bind(this)}

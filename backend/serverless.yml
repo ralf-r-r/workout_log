@@ -69,6 +69,26 @@ functions:
         Resource:
           - "*"
 
+  DeleteTodo:
+    handler: src/lambda/http/deleteSession.handler
+    events:
+      - http:
+          method: delete
+          path: deletesession/{sessionId}
+          cors: True
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow    
+        Action:
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.WORKOUT_TABLE}
+      - Effect: Allow
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
+          
   genUpUrl:
     handler: src/lambda/http/generateUploadUrl.handler
     events:

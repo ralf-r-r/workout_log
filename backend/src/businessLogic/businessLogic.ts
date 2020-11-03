@@ -52,3 +52,11 @@ export async function getSessions(userId: string) {
     })
     return await dataAccess.getSessions(userId)
 }
+
+export async function deleteSession(userId: string, sessionId: string) {
+    logger.info('Deleting todo item', {
+        userId: userId,
+        sessionId: sessionId,  
+    })
+    await dataAccess.deleteSession(userId, sessionId)
+}

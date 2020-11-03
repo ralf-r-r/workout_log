@@ -3,36 +3,56 @@ import Auth from '../auth/Auth'
 import { Card, Button, Image } from 'semantic-ui-react'
 import { Session } from '../types/trainingData'
 import{ UploadFile } from './popups/UploadFile'
+import{ DeleteSession } from './popups/DeleteSession'
 
 export interface componentProps {
     auth: Auth
     session: Session
     onUpload: any
+    onDelete: any
   }
   
 export interface componentState {
   showPopupUploadFile: boolean
+  showDeleteSession: boolean
 }
 
 export class SessionSegment extends Component<componentProps, componentState> {
   state: componentState = {
-    showPopupUploadFile: false
+    showPopupUploadFile: false,
+    showDeleteSession: false
   }
   constructor(props: componentProps) {
     super(props)
     this.toggleUploadFile = this.toggleUploadFile.bind(this)
+    this.onDeleteHandler = this.onDeleteHandler.bind(this)
   } 
 
   toggleUploadFile() {
     this.setState({
         showPopupUploadFile: !this.state.showPopupUploadFile,
     })
-}
+  } 
+
+  toggleDeleteSessoin() {
+    this.setState({
+      showDeleteSession: !this.state.showDeleteSession,
+    })
+  } 
+
+  onDeleteHandler(event:any){
+    this.setState({
+      showDeleteSession: !this.state.showDeleteSession,
+    })
+    this.props.onDelete(event)
+  }
+
     render(){
         return(
-            <div>
-            <Card style = {{marginTop: '0.5em', marginLeft: '0.5em', marginRight: '0.5em', marginBottom: '0.5em'}}>
-            <Image src={this.props.session.attachmentUrl} wrapped ui = {false} size='medium'/>
+            <div style = {{marginTop: '0.5em', marginLeft: '0.5em', marginRight: '0.5em', marginBottom: '0.5em'}}>
+            <Card  fluid>
+            <Image  src= {this.props.session.attachmentUrl}
+            style={{width: 'auto', height: '200px'}} ></Image>
             <Card.Content>
             <Card.Header>{this.props.session.name}</Card.Header>
             <Card.Meta>{this.props.session.date}</Card.Meta>
@@ -48,7 +68,7 @@ export class SessionSegment extends Component<componentProps, componentState> {
                 <Button basic color='purple' onClick = {this.toggleUploadFile.bind(this)} >
                     Upload 
                 </Button>
-                <Button basic color='red'>
+                <Button basic color='red' onClick = {this.onDeleteHandler.bind(this)}>
                     Delete 
                 </Button>
                 </div>
@@ -64,6 +84,18 @@ export class SessionSegment extends Component<componentProps, componentState> {
                 sessionID = {this.props.session.sessionId}
             >
             </UploadFile>
+            : null
+          }  
+
+        {this.state.showDeleteSession ? 
+            <DeleteSession 
+                active= {this.state.showDeleteSession} 
+                onCancel= {this.toggleDeleteSessoin.bind(this)}
+                onDelete = {this.props.onDelete}
+                auth = {this.props.auth}
+                sessionId = {this.props.session.sessionId}
+            >
+            </DeleteSession>
             : null
           }  
 
