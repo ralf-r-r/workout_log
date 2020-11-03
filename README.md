@@ -7,6 +7,8 @@ To run the frontend localhost navigate into frontend folder and execute the foll
 ```
 npm start
 ```
-![Image 1](images/image1.png)
-![Image 2](images/image2.png)
+<br>
+![Image 1](images/image2.png)
+<br>
+![Image 2](images/image1.png)
 
