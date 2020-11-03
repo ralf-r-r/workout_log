@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "session",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "date": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      }
+    },
+    "required": ["name", "date","description"],
+    "additionalProperties": false
+}
