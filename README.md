@@ -5,7 +5,7 @@ The code is split into two folders: frontend contains the React.js frontend and 
 
 # Deployment
 
-## Backend
+### Backend
 
 To deploy the application navigate into the backend folder and run the following commands:
 
