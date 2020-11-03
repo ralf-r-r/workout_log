@@ -48,7 +48,7 @@ export class AddTrainingSession extends React.PureComponent<ComponentProps, Sess
          })
     }
     
-  render() {
+    render() {
     return (
         <DimmerTemplate active={this.props.active}>
             <Form >

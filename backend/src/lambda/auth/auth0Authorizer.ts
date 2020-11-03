@@ -10,9 +10,6 @@ import jwkToPem from 'jwk-to-pem'
 
 const logger = createLogger('auth')
 
-
-// Verify JWT token signature.
-// To get this URL you need to go to an Auth0 page -> Show Advanced Settings -> Endpoints -> JSON Web Key Set
 const jwksUrl = 'https://dev-4sxg1h3q.eu.auth0.com/.well-known/jwks.json'
 
 export const handler = async (
