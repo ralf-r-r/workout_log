@@ -3,7 +3,6 @@ import Auth from '../../auth/Auth'
 import { DimmerTemplate } from './DimmerTemplate'
 import {Button } from 'semantic-ui-react'
 
-
 interface ComponentProps {
     active: boolean
     onCancel: any

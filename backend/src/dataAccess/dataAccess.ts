@@ -85,20 +85,20 @@ async updateSession(userId:string, sessionId:string, updatedSession: SessionRequ
   await this.docClient.update({
     TableName: this.workoutTable,
     Key: { userId: userId, sessionId: sessionId },
-    UpdateExpression: "set #name=:name, #date=:date, #description=:description",
+    UpdateExpression: 'set #name=:name, #date=:date, #description=:description',
     ExpressionAttributeValues: {
-      ":name": updatedSession.name,
-      ":date": updatedSession.date,
-      ":description": updatedSession.description
+      ':name': updatedSession.name,
+      ':date': updatedSession.date,
+      ':description': updatedSession.description
     },
     ExpressionAttributeNames: {
     '#name': 'name',
     '#date': 'date',
     '#description': 'description'
   },
-    ReturnValues: "UPDATED_OLD"
+    ReturnValues: 'UPDATED_OLD'
   })
-  .promise();
+  .promise()
 }
 
 }

@@ -1,8 +1,7 @@
 import * as React from 'react'
-
 import { DimmerTemplate } from './DimmerTemplate'
 import {Form, Button,  } from 'semantic-ui-react'
-import { Session } from '../../types/trainingData'
+
 import Auth from '../../auth/Auth'
 
 interface ComponentProps {
