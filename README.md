@@ -1,6 +1,6 @@
 # Workout Logger App
 This repository contains the workout logger app: a frontend implemented with React.js and a serverless backend for AWS.
-The app allows to add training session items that contain the basic informations about each training day and an image.
+The app allows to add training session items that contain the basic information about each training day and an additional image.
 The code is split into two folders: frontend contains the React.js frontend and backend contains the serverless backend.
 
 # Deployment
